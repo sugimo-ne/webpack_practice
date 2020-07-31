@@ -1,7 +1,7 @@
 const path = require("path");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin }  = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: "./src/javascripts/main.js",
@@ -13,17 +13,36 @@ module.exports = {
     rules: [
       {
         test: /\.css/,
-        use: [{ loader: MiniCssExtractPlugin.loader },{ loader: "css-loader" },],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: "css-loader",
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpg)/,
+        use: [
+          {
+            loader: "file-loader",
+            options:{
+              esModule: false,
+              name:'images/[name].[ext]',
+            }
+          },
+        ],
       },
     ],
   },
-  plugins:[
-      new MiniCssExtractPlugin({
-        filename:'./stylesheets/main.css'
-      }),
-      new HtmlWebpackPlugin({
-          template:'./src/templates/index.html'
-      }),
-      new CleanWebpackPlugin(),
-  ]
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "./stylesheets/main.css",
+    }),
+    new HtmlWebpackPlugin({
+      template: "./src/templates/index.html",
+    }),
+    new CleanWebpackPlugin(),
+  ],
 };
